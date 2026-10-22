@@ -1,2 +1,1 @@
-# SpaceChallengeGame
-A game worth playing after a tough workday, or at least once a day.
+Just download the game (index.html) to your computer and you can play a cool roguelike arcade game.
