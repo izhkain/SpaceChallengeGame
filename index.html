@@ -922,29 +922,52 @@ function spawnBoss() {
 function updateBoss(e, dt, sp) {
   e.shootCd -= dt;
   e.dashCd -= dt;
+  
+  // Увеличиваем скорость босса с уровнем
+  const bossSpeedMultiplier = 1 + bossTier * 0.1;
+  
   if (e.dash > 0) {
     e.dash -= dt;
     e.x += e.dvx * dt;
     e.y += e.dvy * dt;
   } else {
     const a = Math.atan2(P.y - e.y, P.x - e.x);
-    e.x += Math.cos(a) * sp * dt;
-    e.y += Math.sin(a) * sp * dt;
+    e.x += Math.cos(a) * sp * dt * bossSpeedMultiplier;
+    e.y += Math.sin(a) * sp * dt * bossSpeedMultiplier;
+    
     if (e.dashCd <= 0) {
-      e.dashCd = rnd(2.6, 4.2);
+      e.dashCd = rnd(2.6 - bossTier * 0.1, 4.2 - bossTier * 0.1); // Уменьшаем время между рывками
       e.dash = 0.42;
-      const dv = 520 + bossTier * 22;
+      const dv = 520 + bossTier * 30; // Увеличиваем силу рывка
       e.dvx = Math.cos(a) * dv;
       e.dvy = Math.sin(a) * dv;
     }
   }
+  
   if (e.shootCd <= 0) {
-    e.shootCd = Math.max(0.9, 2.2 - bossTier * 0.09);
-    const n = 5 + bossTier * 2;
+    // Уменьшаем время перезарядки с уровнем
+    e.shootCd = Math.max(0.7 - bossTier * 0.05, 1.8 - bossTier * 0.09);
+    
+    // Увеличиваем количество пуль
+    const n = 5 + bossTier * 3;
+    
     const base = Math.atan2(P.y - e.y, P.x - e.x);
     for (let i = 0; i < n; i++) {
       const a = base + (i - (n - 1) / 2) * 0.22;
-      ebullets.push({ x: e.x, y: e.y, vx: Math.cos(a) * 265, vy: Math.sin(a) * 265, r: 6, dmg: 12, life: 3.4, color: '#ff7aa8' });
+      
+      // Увеличиваем урон пуль
+      const bulletDmg = 12 + bossTier * 2;
+      
+      ebullets.push({ 
+        x: e.x, 
+        y: e.y, 
+        vx: Math.cos(a) * 265, 
+        vy: Math.sin(a) * 265, 
+        r: 6, 
+        dmg: bulletDmg, 
+        life: 3.4, 
+        color: '#ff7aa8' 
+      });
     }
   }
 }
