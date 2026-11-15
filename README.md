@@ -1,4 +1,4 @@
-Just download the game (index.html) to your computer and you can play a cool roguelike arcade game. Every day after work or during work =)
+Just download the game to your computer and you can play a cool roguelike arcade game. Every day after work or during work =)
 
 пятница, 30 октября 2026 г.
 
